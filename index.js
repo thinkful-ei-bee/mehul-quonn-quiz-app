@@ -3,17 +3,30 @@
 
 let questionNumber = 0;
 
+
 // to be updated every time question number is incremented
 
-const currentState= {
-  currqNum: 0,
-  currQ: STORE[0].question,
-  currAnswers: STORE[this.currqNum].answers,
-  currCorrectAnswer: STORE[this.currqNum].correctAnswer,
-  currIcon: STORE[this.currqNum].icon,
-  currAlt: STORE[this.currqNum].alt,
+let currentState= {
+  currqNum: questionNumber,
+  currQ: STORE[questionNumber].question,
+  currAnswers: STORE[questionNumber].answers,
+  currCorrectAnswer: STORE[questionNumber].correctAnswer,
+  currIcon: STORE[questionNumber].icon,
+  currAlt: STORE[questionNumber].alt,
   currCorrect: 0
 };
+
+function updateCurrentState(questionNumber) {
+
+
+  currentState.currqNum = questionNumber;
+  currentState.currQ = STORE[questionNumber].question;
+  currentState.currAnswers = STORE[questionNumber].answers;
+  currentState.currCorrectAnswer= STORE[questionNumber].correctAnswer;
+  currentState.currIcon = STORE[questionNumber].icon;
+  currentState.currAlt = STORE[questionNumber].alt;
+
+}
 
 
 //called when the "start quiz" button is clicked on the first screen
@@ -21,6 +34,9 @@ function startQuiz() {
   $('#startBtn').on('click', function() { 
     $(this).remove();
     $('#questionBox').css('display', 'block');
+    $('.questionNumber').text(questionNumber+1);
+    $('.score').text(0);
+
   });
 }
 
@@ -39,62 +55,113 @@ function generateQuestion() {
     <fieldset>
     <label class="answerOption">
     <input type="radio" value="${
-  currentState.Answers[0]
+  currentState.currAnswers[0]
 }" name="answer" required>
-    <span>${currentState.Answers[0]}</span>
+    <span>${currentState.currAnswers[0]}</span> 
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-  currentState.Answers[1]
+  currentState.currAnswers[1]
 }" name="answer" required>
-    <span>${currentState.Answers[1]}</span>
+    <span>${currentState.currAnswers[1]}</span>
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-  currentState.Answers[2]
+  currentState.currAnswers[2]
 }" name="answer" required>
-    <span>${currentState.Answers[2]}</span>
+    <span>${currentState.currAnswers[2]}</span>
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-  currentState.Answers[3]
+  currentState.currAnswers[3]
 }" name="answer" required>
-    <span>${currentState.Answers[3]}</span>
+    <span>${currentState.currAnswers[3]}</span>
     </label>
-    <button type="submit" class="submitButton">Submit</button>
+    <input type="submit" class="submitButton">
     </fieldset>
     </form>
     </div>`;
   } else {
-    renderResults();
-    restartQuiz();
-    $('.questionNumber').text(10);
+    Results();
+    
   }
 }
 
 function handleClickSubmitBtn() {
-  $('form').on('click', 'button', function(event) {
+  $('form').on('submit',  function(event) {
+    event.preventDefault();
+    checkAnswer();
+    
+  
+  });
+}
+
+
+
+
+//Need a check Answer function
+function checkAnswer () {
+  let selectedAnswer = $('input[type = "radio"]:checked').val();
+  if(selectedAnswer === currentState.currCorrectAnswer)
+  {
+    currentState.currCorrect++;
+    $('.score').text(currentState.currCorrect);
+    displayQuestionResultCorrect();
+  }
+  else
+  {
+    displayQuestionResultWrong();
+  }
+
+}
+
+function displayQuestionResultCorrect () {
+
+  $(`.question-${questionNumber}`).css('display','none');
+  $('#questionBox').html(`<img class= "icon" src=${currentState.currIcon}>
+  <p> "Correct!" </p> 
+  <button type="submit" class="nextButton">Next</button>`);
+  handleNextButton();
+
+}
+
+
+function displayQuestionResultWrong () {
+
+  $(`.question-${questionNumber}`).css('display','none');
+  $('#questionBox').html(`<img class= "icon" src=${currentState.currIcon}>
+  <p> "Incorrect. The correct answer is ${currentState.currCorrectAnswer}" </p> 
+  <button type="submit" class="nextButton">Next</button>`);
+  handleNextButton();
+
+}
+
+
+function handleNextButton(){
+  $('.nextButton').on('click', function(event) {
     event.preventDefault();
     questionNumber++;
-    console.log(STORE.length, questionNumber);
+    if(questionNumber < STORE.length)
+    {
+      updateCurrentState(questionNumber);
+      $('.questionNumber').text(questionNumber+1);
+
+    }
     renderView();
     handleClickSubmitBtn();  
 
   });
-}
-
-function renderResults() {
-  console.log('render results');
-}
-
-function nextQuestion() {
-  renderView();
-
 
 }
 
-//Need a check Answer function
-function checkAnswer () {
+function Results() {
+
+  $('#questionBox').html(`
+  <p> "You had ${currentState.currCorrect} out of ${questionNumber} correct" </p> 
+  <button type="submit" class="resetQuizButton">Reset Quiz</button>`);
+   
+  restartQuiz();
+
 
 }
 
@@ -108,7 +175,16 @@ function handleQuiz() {
 
 
 function restartQuiz() {
-  console.log('restart quiz');
+  $('.resetQuizButton').on('click', function(event) {
+    questionNumber = 0;
+    $('.questionNumber').text(questionNumber+1);
+    $('.score').text(0);
+    updateCurrentState(questionNumber);
+    currentState.currCorrect = 0;
+    renderView();
+    handleClickSubmitBtn();  
+
+  });
 }
 
 $(handleQuiz());

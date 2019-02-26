@@ -15,7 +15,7 @@ const STORE = [
       '33'
     ],
     correctAnswer: '33',
-    icon: 'https://imgur.com/a/gkx5z3a',
+    icon: 'https://i.imgur.com/CfA4XVq.jpg',
     alt: 'Lakers Celtics pic'
   },
   {
@@ -27,7 +27,7 @@ const STORE = [
       'Kevin Durant'
     ],
     correctAnswer: 'Derrick Rose',
-    icon: 'https://imgur.com/a/ancLumd',
+    icon: 'https://i.imgur.com/KlMVLts.jpg',
     alt: 'Derrick Rose pic'
   },
   {
@@ -39,7 +39,7 @@ const STORE = [
       'John Stockton'
     ],
     correctAnswer: 'Larry Bird',
-    icon: 'https://imgur.com/a/bygD6Kj',
+    icon: 'https://i.imgur.com/SfHteSk.jpg',
     alt: 'Larry Bird pic'
   },
   {
@@ -51,7 +51,7 @@ const STORE = [
       'New Jersey Nets'
     ],
     correctAnswer: 'Seattle Supersonics',
-    icon: 'https://imgur.com/a/1MS5FyB',
+    icon: 'https://i.imgur.com/seSLhot.jpg',
     alt: 'seattle supersonics icon'
   },
   {
@@ -63,7 +63,9 @@ const STORE = [
       'Jamal Crawford'
     ],
     correctAnswer: 'Ray Allen',
-    icon: 'https://imgur.com/a/9VEyxnU',
+    icon: 'https://i.imgur.com/Ic3K7Yr.jpg',
     alt: 'hat icon'
   }
 ];
+
+

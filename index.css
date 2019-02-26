@@ -44,3 +44,8 @@ main {
 #questionBox {
   display: none;
 }
+
+.icon {
+  height:300px;
+  width:300px;
+}
