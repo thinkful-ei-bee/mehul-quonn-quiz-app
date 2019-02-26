@@ -1,0 +1,35 @@
+
+nav {
+  height: 60px;
+  background-color: orange;
+  position: fixed;
+  width: 100%;
+}
+
+nav .icon-img {
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid black;
+}
+
+nav ul {
+ float:right;
+  list-style: none;
+   margin-right:20px;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav li::after {
+  content: "|";
+  margin-left: 5px;
+}
+
+nav a:hover {
+  color: black;
+}

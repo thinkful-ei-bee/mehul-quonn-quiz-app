@@ -10,8 +10,8 @@ const STORE = [
       '33'
     ],
     correctAnswer: '33',
-    icon: 'https://i.imgur.com/Rue4wCj.png',
-    alt: 'tent icon'
+    icon: 'https://imgur.com/a/gkx5z3a',
+    alt: 'Lakers Celtics pic'
   },
   {
     question: 'Which league MVP has never made the NBA Finals?',
@@ -22,8 +22,8 @@ const STORE = [
       'Kevin Durant'
     ],
     correctAnswer: 'Derrick Rose',
-    icon: 'https://i.imgur.com/iQ0FBhB.png',
-    alt: 'shield for 10 essentials icon'
+    icon: 'https://imgur.com/a/ancLumd',
+    alt: 'Derrick Rose pic'
   },
   {
     question: 'Who famously is quoted as saying "Its just God disgused as Micahel Jordan"?',
@@ -34,8 +34,8 @@ const STORE = [
       'John Stockton'
     ],
     correctAnswer: 'Larry Bird',
-    icon: 'https://i.imgur.com/uXukVjk.png',
-    alt: 'weight icon'
+    icon: 'https://imgur.com/a/bygD6Kj',
+    alt: 'Larry Bird pic'
   },
   {
     question: 'Which of the following teams have been re-branded and moved to Okalahoma?',
@@ -46,8 +46,8 @@ const STORE = [
       'New Jersey Nets'
     ],
     correctAnswer: 'Seattle Supersonics',
-    icon: 'https://i.imgur.com/i0Q515j.png',
-    alt: 'bear paw icon'
+    icon: 'https://imgur.com/a/1MS5FyB',
+    alt: 'seattle supersonics icon'
   },
   {
     question: 'Who is he current leader in most three-point shots made in league history?',
@@ -58,7 +58,7 @@ const STORE = [
       'Jamal Crawford'
     ],
     correctAnswer: 'Ray Allen',
-    icon: 'https://i.imgur.com/LHRMcBd.png',
+    icon: 'https://imgur.com/a/9VEyxnU',
     alt: 'hat icon'
   }
 ];
