@@ -1,49 +1,65 @@
-"use strict";
+'use strict';
+/* global $ */
+
 let questionNumber = 0;
+
+// to be updated every time question number is incremented
+
+const currentState= {
+  currqNum: 0,
+  currQ: STORE[0].question,
+  currAnswers: STORE[this.currqNum].answers,
+  currCorrectAnswer: STORE[this.currqNum].correctAnswer,
+  currIcon: STORE[this.currqNum].icon,
+  currAlt: STORE[this.currqNum].alt,
+  currCorrect: 0
+};
+
 
 //called when the "start quiz" button is clicked on the first screen
 function startQuiz() {
-  $("#startBtn").on("click", function() {
+  $('#startBtn').on('click', function() { 
     $(this).remove();
-    $("#questionBox").css("display", "block");
+    $('#questionBox').css('display', 'block');
   });
 }
 
 //generates the first question view
 function renderView() {
-  $("#questionBox").html(generateQuestion());
+  
+  $('#questionBox').html(generateQuestion());
   generateQuestion();
 }
 
 function generateQuestion() {
   if (questionNumber < STORE.length) {
     return `<div class="question-${questionNumber}">
-    <h2>${STORE[questionNumber].question}</h2>
+    <h2>${currentState.currQ}</h2>
     <form>
     <fieldset>
     <label class="answerOption">
     <input type="radio" value="${
-      STORE[questionNumber].answers[0]
-    }" name="answer" required>
-    <span>${STORE[questionNumber].answers[0]}</span>
+  currentState.Answers[0]
+}" name="answer" required>
+    <span>${currentState.Answers[0]}</span>
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-      STORE[questionNumber].answers[1]
-    }" name="answer" required>
-    <span>${STORE[questionNumber].answers[1]}</span>
+  currentState.Answers[1]
+}" name="answer" required>
+    <span>${currentState.Answers[1]}</span>
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-      STORE[questionNumber].answers[2]
-    }" name="answer" required>
-    <span>${STORE[questionNumber].answers[2]}</span>
+  currentState.Answers[2]
+}" name="answer" required>
+    <span>${currentState.Answers[2]}</span>
     </label>
     <label class="answerOption">
     <input type="radio" value="${
-      STORE[questionNumber].answers[3]
-    }" name="answer" required>
-    <span>${STORE[questionNumber].answers[3]}</span>
+  currentState.Answers[3]
+}" name="answer" required>
+    <span>${currentState.Answers[3]}</span>
     </label>
     <button type="submit" class="submitButton">Submit</button>
     </fieldset>
@@ -52,31 +68,47 @@ function generateQuestion() {
   } else {
     renderResults();
     restartQuiz();
-    $(".questionNumber").text(10);
+    $('.questionNumber').text(10);
   }
 }
 
 function handleClickSubmitBtn() {
-  $("form").on("click", "button", function(event) {
+  $('form').on('click', 'button', function(event) {
     event.preventDefault();
     questionNumber++;
     console.log(STORE.length, questionNumber);
     renderView();
+    handleClickSubmitBtn();  
+
   });
 }
 
 function renderResults() {
-  console.log("render results");
-}
-//Calls all other functions
-function handleQuiz() {
-  renderView();
-  startQuiz();
-  handleClickSubmitBtn();
+  console.log('render results');
 }
 
+function nextQuestion() {
+  renderView();
+
+
+}
+
+//Need a check Answer function
+function checkAnswer () {
+
+}
+
+
+//Calls all other functions
+function handleQuiz() {
+  startQuiz();
+  renderView();
+  handleClickSubmitBtn();  
+}
+
+
 function restartQuiz() {
-  console.log("restart quiz");
+  console.log('restart quiz');
 }
 
 $(handleQuiz());
