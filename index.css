@@ -49,6 +49,10 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-image: url("http://meadowwoodgarden.com/wp-content/uploads/2018/06/creative-design-basketball-court-wood-flooring-anba-basketball-court-floor-view-jzgtvwaqjpg-delightful-basketball.jpg"); /* The image used */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 #questionBox {
@@ -57,10 +61,12 @@ main {
 
 .trivia-question {
   padding: 0 10px;
+  text-align: center;
 }
 .icon {
-  height: 300px;
-  width: 300px;
+  height: auto;
+  max-width: 300px;
+  width: 100%;
 }
 
 fieldset {
@@ -102,7 +108,7 @@ button:hover {
   background: black;
   color: white;
   margin-bottom: 10px;
-  width: 80%;
+  width: 100%;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #666;
   cursor: pointer;

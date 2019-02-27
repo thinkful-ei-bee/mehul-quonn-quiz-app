@@ -77,4 +77,7 @@
   .col-12 {
     width: 100%;
   }
+  .answerBox {
+    width: 80%;
+  }
 }
