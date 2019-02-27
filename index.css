@@ -26,7 +26,7 @@ nav ul {
 
 nav li {
   display: inline-block;
-  font-size: 26px;
+  font-size: 18px;
   font-weight: 900;
 }
 
@@ -55,6 +55,9 @@ main {
   display: none;
 }
 
+.trivia-question {
+  padding: 0 10px;
+}
 .icon {
   height: 300px;
   width: 300px;
@@ -87,6 +90,12 @@ button:hover {
   cursor: pointer;
 }
 
+#resetBtn {
+  display: block;
+  width: 30%;
+  padding: 10px;
+  font-size: 18px;
+}
 .answerBox {
   padding: 5px;
   border: 1px solid black;
