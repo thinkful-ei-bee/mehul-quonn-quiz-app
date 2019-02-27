@@ -15,7 +15,10 @@ let currentState = {
     currAlt: STORE[0].alt,
     currCorrect: 0
   },
-  startBtnVisible: true
+  startBtnVisible: true,
+  submitClicked: false,
+  userAnswerCorrect: false,
+  nextBtnClicked: false
 };
 
 function updateCurrentState(questionNumber) {
@@ -50,8 +53,17 @@ function renderView() {
   if (!currentState.startBtnVisible && questionNumber === undefined) {
     console.log(currentState.startBtnVisible);
     startQuiz();
+    $("#questionBox").html(generateQuestion());
+  } else if (currentState.submitClicked) {
+    console.log("from render else");
+    displayQuestionResult(currentState.userAnswerCorrect);
+  } else if (currentState.nextBtnClicked && questionNumber < STORE.length) {
+    console.log("right before results");
+    $("#questionBox").html(generateQuestion());
+  } else if (currentState.nextBtnClicked && questionNumber >= STORE.length) {
+    console.log("before results");
+    Results();
   }
-  $("#questionBox").html(generateQuestion());
 }
 
 function generateQuestion() {
@@ -59,7 +71,7 @@ function generateQuestion() {
     let questions = currentState.questions;
     return `<div class="question-${questionNumber}">
     <h2 class="trivia-question">${questions.currQ}</h2>
-    <form>
+    <form id="questionForm">
     <fieldset>
     <div class='answerBox'>
     <label class="answerOption">
@@ -89,7 +101,7 @@ function generateQuestion() {
     }" name="answer" required>
     <span>${questions.currAnswers[3]}</span>
     </label></div>
-    <input type="submit" class="submitButton" value="SUBMIT">
+    <input id="questionSubmit" type="submit" class="submitButton" value="SUBMIT">
     </fieldset>
     </form>
     </div>`;
@@ -100,8 +112,7 @@ function generateQuestion() {
 }
 
 function handleClickSubmitBtn() {
-  $("form").on("submit", function(event) {
-    console.log("handle submit");
+  $("#questionBox").on("click", "input:submit", function(event) {
     event.preventDefault();
     checkAnswer();
   });
@@ -109,59 +120,63 @@ function handleClickSubmitBtn() {
 
 //Need a check Answer function
 function checkAnswer() {
+  currentState.submitClicked = true;
   console.log("from check answer");
-  $(".answerOption").on("click", function() {
-    // $this.find("input:radio").prop("checked", true);
-    console.log("clicke");
-  });
+  //$(".answerOption").on("click", function() {
+  // $this.find("input:radio").prop("checked", true);
+  //console.log("clicke");
+  //});
   let selectedAnswer = $('input[type = "radio"]:checked').val();
   let width = questionNumber + 1;
   $(".progress-bar").css("width", `${width * 20}%`);
   if (selectedAnswer === currentState.questions.currCorrectAnswer) {
-    currentState.currCorrect++;
+    currentState.questions.currCorrect++;
+    currentState.userAnswerCorrect = true;
     $(".progress-overlay").css(
       "width",
       `${currentState.questions.currCorrect * 20}%`
     );
     $(".score").text(currentState.questions.currCorrect);
-    displayQuestionResultCorrect();
-  } else {
-    displayQuestionResultWrong();
   }
+  renderView();
+  currentState.userAnswerCorrect = false;
+  currentState.submitClicked = false;
 }
 
-function displayQuestionResultCorrect() {
-  $(`.question-${questionNumber}`).css("display", "none");
-  $("#questionBox").html(`<img class= "icon" src=${
-    currentState.questions.currIcon
-  }>
+function displayQuestionResult(result) {
+  if (result) {
+    $(`.question-${questionNumber}`).css("display", "none");
+    $("#questionBox").html(`<img class= "icon" src=${
+      currentState.questions.currIcon
+    }>
   <p> "Correct!" </p> 
   <button type="submit" class="nextButton">Next</button>`);
-  handleNextButton();
-}
-
-function displayQuestionResultWrong() {
-  $(`.question-${questionNumber}`).css("display", "none");
-  $("#questionBox").html(`<img class= "icon" src=${
-    currentState.questions.currIcon
-  }>
+  } else {
+    $(`.question-${questionNumber}`).css("display", "none");
+    $("#questionBox").html(`<img class= "icon" src=${
+      currentState.questions.currIcon
+    }>
   <p> "Incorrect. The correct answer is ${
     currentState.questions.currCorrectAnswer
   }" </p> 
   <button type="submit" class="nextButton">Next</button>`);
-  handleNextButton();
+  }
 }
 
 function handleNextButton() {
-  $(".nextButton").on("click", function(event) {
+  $("#questionBox").on("click", ".nextButton", function(event) {
+    console.log("next button clicked");
     event.preventDefault();
     questionNumber++;
     if (questionNumber < STORE.length) {
       updateCurrentState(questionNumber);
+      currentState.nextBtnClicked = true;
+      renderView();
+      currentState.nextBtnClicked = false;
       $(".questionNumber").text(questionNumber + 1);
+    } else {
+      renderView();
     }
-    renderView();
-    handleClickSubmitBtn();
   });
 }
 
@@ -182,19 +197,18 @@ function Results() {
     currentState.questions.currCorrect
   } out of ${questionNumber} correct" </p> 
   <button id="resetBtn" type="submit" class="resetQuizButton">Reset Quiz</button>`);
-
-  restartQuiz();
 }
 
 //Calls all other functions
 function handleQuiz() {
-  handleStartBtnClicked();
-  //renderView();
   handleClickSubmitBtn();
+  handleStartBtnClicked();
+  handleNextButton();
+  restartQuiz();
 }
 
 function restartQuiz() {
-  $(".resetQuizButton").on("click", function(event) {
+  $("#questionBox").on("click", "#resetButton", function(event) {
     questionNumber = 0;
     $(".questionNumber").text(questionNumber + 1);
     $(".score").text(0);
