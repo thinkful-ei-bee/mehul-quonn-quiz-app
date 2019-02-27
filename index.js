@@ -58,11 +58,13 @@ function renderView() {
     console.log("from render else");
     displayQuestionResult(currentState.userAnswerCorrect);
   } else if (currentState.nextBtnClicked && questionNumber < STORE.length) {
-    console.log("right before results");
+    console.log("from renderview condition 2");
     $("#questionBox").html(generateQuestion());
   } else if (currentState.nextBtnClicked && questionNumber >= STORE.length) {
-    console.log("before results");
+    console.log("from renderview condion 3");
     Results();
+  } else {
+    $("#questionBox").html(generateQuestion());
   }
 }
 
@@ -175,7 +177,9 @@ function handleNextButton() {
       currentState.nextBtnClicked = false;
       $(".questionNumber").text(questionNumber + 1);
     } else {
+      currentState.nextBtnClicked = true;
       renderView();
+      currentState.nextBtnClicked = false;
     }
   });
 }
@@ -208,15 +212,15 @@ function handleQuiz() {
 }
 
 function restartQuiz() {
-  $("#questionBox").on("click", "#resetButton", function(event) {
+  $("#questionBox").on("click", "#resetBtn", function(event) {
     questionNumber = 0;
     $(".questionNumber").text(questionNumber + 1);
     $(".score").text(0);
     $(".progress-bar,.progress-overlay").css("width", "0");
+    console.log("restart");
     updateCurrentState(questionNumber);
     currentState.questions.currCorrect = 0;
     renderView();
-    handleClickSubmitBtn();
   });
 }
 
