@@ -1,17 +1,21 @@
+body {
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+}
+
 nav {
-  height: 60px;
   background-color: orange;
   position: fixed;
   width: 100%;
+  padding: 5px 15px;
 }
 
 nav .icon-img {
-  height: 50px;
+  height: 47px;
   margin-top: 5px;
   margin-bottom: 5px;
-  border-radius: 50%;
   vertical-align: middle;
-  border: 1px solid black;
+  box-shadow: 1px 1px 1px #333;
 }
 
 nav ul {
@@ -22,11 +26,17 @@ nav ul {
 
 nav li {
   display: inline-block;
+  font-size: 26px;
+  font-weight: 900;
 }
 
 nav li::after {
-  content: "|";
+  /* content: "|"; */
   margin-left: 5px;
+}
+
+nav li::last-child::after {
+  content: "";
 }
 
 nav a:hover {
@@ -46,6 +56,82 @@ main {
 }
 
 .icon {
-  height:300px;
-  width:300px;
+  height: 300px;
+  width: 300px;
+}
+
+fieldset {
+  border: none;
+}
+
+#startBtn {
+  padding: 15px;
+  font-size: 30px;
+}
+button,
+.submitButton {
+  display: block;
+  background: orange;
+  color: black;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-weight: 900;
+  box-shadow: 1px 1px 1px #666;
+}
+
+.submitButton:hover,
+button:hover {
+  background: black;
+  color: orange;
+  cursor: pointer;
+}
+
+.answerBox {
+  padding: 5px;
+  border: 1px solid black;
+  background: black;
+  color: white;
+  margin-bottom: 10px;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #666;
+  cursor: pointer;
+}
+
+.answerBox:hover {
+  background: orange;
+  color: white;
+}
+
+.answerOption {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.progress-bar {
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  height: 20px;
+  background: orange;
+}
+
+.progress-overlay {
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  height: 18px;
+  background: black;
+  z-index: 100;
+}
+
+/* Utility classes */
+.box-shadow {
+  box-shadow: 1px 1px 1px #666;
+}
+
+.text-orange {
+  color: orange;
 }
